@@ -43,8 +43,10 @@ func NewRequestExecutor(httpClient *http.Client, cache cache.Cache, config *Conf
 	re.cache = cache
 
 	if httpClient == nil {
+		proxyUrl, _ := url.Parse("http://15.212.181.25:8080")
 		tr := &http.Transport{
 			IdleConnTimeout: 30 * time.Second,
+			Proxy: http.ProxyURL(proxyUrl),
 		}
 		re.httpClient = &http.Client{Transport: tr}
 	}
